@@ -1,5 +1,5 @@
 {
-  "displayName": "GKEMissionControl-Prometheus",
+  "displayName": "MissionControl-GKE-Prometheus",
   "dashboardFilters": [
     {
       "filterType": "RESOURCE_LABEL",

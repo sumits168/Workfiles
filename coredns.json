@@ -1,5 +1,5 @@
 {
-  "displayName": "GKEMissionControl-CoreDNS",
+  "displayName": "MissionControl-GKE-CoreDNS",
   "dashboardFilters": [
     {
       "filterType": "RESOURCE_LABEL",

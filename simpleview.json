@@ -1,5 +1,5 @@
 {
-  "displayName": "GKEMissionControl-Simpleview",
+  "displayName": "MissionControl-GKE-Simple-View",
   "dashboardFilters": [
     {
       "filterType": "RESOURCE_LABEL",

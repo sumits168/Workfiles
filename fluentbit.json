@@ -1,22 +1,10 @@
 {
-  "displayName": "GKEMissioncontrol-fluenbit",
+  "displayName": "MissionControl-GKE-Fluentbit",
   "dashboardFilters": [
-    {
-      "filterType": "RESOURCE_LABEL",
-      "labelKey": "job",
-      "templateVariable": "",
-      "valueType": "STRING_ARRAY"
-    },
     {
       "filterType": "RESOURCE_LABEL",
       "labelKey": "instance",
       "templateVariable": "instance",
-      "valueType": "STRING_ARRAY"
-    },
-    {
-      "filterType": "RESOURCE_LABEL",
-      "labelKey": "node_name",
-      "templateVariable": "node_name",
       "valueType": "STRING_ARRAY"
     }
   ],
