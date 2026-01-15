@@ -1,0 +1,394 @@
+{
+  "displayName": "GkeMissionControl-Argocd",
+  "dashboardFilters": [
+    {
+      "filterType": "RESOURCE_LABEL",
+      "labelKey": "cluster",
+      "stringValue": "",
+      "templateVariable": "cluster",
+      "valueType": "STRING"
+    },
+    {
+      "filterType": "RESOURCE_LABEL",
+      "labelKey": "namespace",
+      "stringValue": "",
+      "templateVariable": "namespace",
+      "valueType": "STRING"
+    },
+    {
+      "filterType": "RESOURCE_LABEL",
+      "labelKey": "job",
+      "stringValue": "",
+      "templateVariable": "job",
+      "valueType": "STRING"
+    },
+    {
+      "filterType": "METRIC_LABEL",
+      "labelKey": "dest_server",
+      "stringValue": "",
+      "templateVariable": "kubernetes_cluster",
+      "valueType": "STRING"
+    },
+    {
+      "filterType": "METRIC_LABEL",
+      "labelKey": "project",
+      "stringValue": "",
+      "templateVariable": "project",
+      "valueType": "STRING"
+    },
+    {
+      "filterType": "METRIC_LABEL",
+      "labelKey": "name",
+      "stringValue": "",
+      "templateVariable": "application",
+      "valueType": "STRING"
+    }
+  ],
+  "description": "",
+  "labels": {
+    "cloud-monitoring-dashboard-importer": "",
+    "goog-imported-grafana-dashboard": "",
+    "goog-imported-grafana-dashboard-from-ui": "",
+    "goog-imported-grafana-id": "19974",
+    "goog-imported-grafana-revision": "1",
+    "goog-imported-via-script": ""
+  },
+  "mosaicLayout": {
+    "columns": 24,
+    "tiles": [
+      {
+        "yPos": 1,
+        "height": 6,
+        "width": 12,
+        "widget": {
+          "title": "Application Health Status",
+          "id": "",
+          "xyChart": {
+            "dataSets": [
+              {
+                "breakdowns": [],
+                "dimensions": [],
+                "legendTemplate": "${labels.project} - ${labels.health_status}",
+                "measures": [],
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "timeSeriesQuery": {
+                  "outputFullDuration": false,
+                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n  }\n) by (job, project, health_status)\n",
+                  "unitOverride": ""
+                }
+              }
+            ],
+            "thresholds": []
+          }
+        }
+      },
+      {
+        "yPos": 1,
+        "xPos": 12,
+        "height": 6,
+        "width": 12,
+        "widget": {
+          "title": "Application Sync Status",
+          "id": "",
+          "xyChart": {
+            "dataSets": [
+              {
+                "breakdowns": [],
+                "dimensions": [],
+                "legendTemplate": "${labels.project} - ${labels.sync_status}",
+                "measures": [],
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "timeSeriesQuery": {
+                  "outputFullDuration": false,
+                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n  }\n) by (job, project, sync_status)\n",
+                  "unitOverride": ""
+                }
+              }
+            ],
+            "thresholds": []
+          }
+        }
+      },
+      {
+        "yPos": 7,
+        "height": 6,
+        "width": 12,
+        "widget": {
+          "title": "Application Syncs",
+          "id": "",
+          "xyChart": {
+            "dataSets": [
+              {
+                "breakdowns": [],
+                "dimensions": [],
+                "legendTemplate": "${labels.project} - ${labels.phase}",
+                "measures": [],
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "timeSeriesQuery": {
+                  "outputFullDuration": false,
+                  "prometheusQuery": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n      }[${__interval}]\n    )\n  )\n) by (job, project, phase)\n",
+                  "unitOverride": ""
+                }
+              }
+            ],
+            "thresholds": []
+          }
+        }
+      },
+      {
+        "yPos": 7,
+        "xPos": 12,
+        "height": 6,
+        "width": 12,
+        "widget": {
+          "title": "Application Auto Sync Enabled",
+          "id": "",
+          "xyChart": {
+            "dataSets": [
+              {
+                "breakdowns": [],
+                "dimensions": [],
+                "legendTemplate": "${labels.project} - ${labels.autosync_enabled}",
+                "measures": [],
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "timeSeriesQuery": {
+                  "outputFullDuration": false,
+                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n  }\n) by (job, project, autosync_enabled)\n",
+                  "unitOverride": ""
+                }
+              }
+            ],
+            "thresholds": []
+          }
+        }
+      },
+      {
+        "yPos": 13,
+        "height": 8,
+        "width": 12,
+        "widget": {
+          "title": "Applications Unhealthy",
+          "id": "",
+          "timeSeriesTable": {
+            "columnSettings": [
+              {
+                "column": "value",
+                "visible": false
+              }
+            ],
+            "dataSets": [
+              {
+                "tableTemplate": "",
+                "timeSeriesQuery": {
+                  "outputFullDuration": false,
+                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n    health_status!~\"Healthy|Progressing\"\n  }\n) by (job, dest_server, project, name, health_status)\n",
+                  "unitOverride": ""
+                }
+              }
+            ],
+            "displayColumnType": false,
+            "metricVisualization": "NUMBER"
+          }
+        }
+      },
+      {
+        "yPos": 13,
+        "xPos": 12,
+        "height": 8,
+        "width": 12,
+        "widget": {
+          "title": "Applications Out Of Sync",
+          "id": "",
+          "timeSeriesTable": {
+            "columnSettings": [
+              {
+                "column": "value",
+                "visible": false
+              }
+            ],
+            "dataSets": [
+              {
+                "tableTemplate": "",
+                "timeSeriesQuery": {
+                  "outputFullDuration": false,
+                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n    sync_status!=\"Synced\"\n  }\n) by (job, dest_server, project, name, sync_status) > 0\n",
+                  "unitOverride": ""
+                }
+              }
+            ],
+            "displayColumnType": false,
+            "metricVisualization": "NUMBER"
+          }
+        }
+      },
+      {
+        "yPos": 21,
+        "height": 8,
+        "width": 12,
+        "widget": {
+          "title": "Applications That Failed to Sync[7d]",
+          "id": "",
+          "timeSeriesTable": {
+            "columnSettings": [
+              {
+                "column": "value",
+                "visible": false
+              }
+            ],
+            "dataSets": [
+              {
+                "tableTemplate": "",
+                "timeSeriesQuery": {
+                  "outputFullDuration": false,
+                  "prometheusQuery": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n        phase!=\"Succeeded\"\n      }[7d]\n    )\n  )\n) by (job, dest_server, project, name, phase) > 0\n",
+                  "unitOverride": ""
+                }
+              }
+            ],
+            "displayColumnType": false,
+            "metricVisualization": "NUMBER"
+          }
+        }
+      },
+      {
+        "yPos": 21,
+        "xPos": 12,
+        "height": 8,
+        "width": 12,
+        "widget": {
+          "title": "Applications With Auto Sync Disabled",
+          "id": "",
+          "timeSeriesTable": {
+            "columnSettings": [
+              {
+                "column": "value",
+                "visible": false
+              }
+            ],
+            "dataSets": [
+              {
+                "tableTemplate": "",
+                "timeSeriesQuery": {
+                  "outputFullDuration": false,
+                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n    autosync_enabled!=\"true\"\n  }\n) by (job, dest_server, project, name, autosync_enabled) > 0\n",
+                  "unitOverride": ""
+                }
+              }
+            ],
+            "displayColumnType": false,
+            "metricVisualization": "NUMBER"
+          }
+        }
+      },
+      {
+        "yPos": 29,
+        "height": 8,
+        "width": 8,
+        "widget": {
+          "title": "Application Health Status",
+          "id": "",
+          "xyChart": {
+            "dataSets": [
+              {
+                "breakdowns": [],
+                "dimensions": [],
+                "legendTemplate": "${labels.project}/${labels.name} - ${labels.health_status}",
+                "measures": [],
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "timeSeriesQuery": {
+                  "outputFullDuration": false,
+                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n    name=~\"${application.value}\",\n  }\n) by (namespace, job, dest_server, project, name, health_status)\n",
+                  "unitOverride": ""
+                }
+              }
+            ],
+            "thresholds": []
+          }
+        }
+      },
+      {
+        "yPos": 29,
+        "xPos": 8,
+        "height": 8,
+        "width": 8,
+        "widget": {
+          "title": "Application Sync Status",
+          "id": "",
+          "xyChart": {
+            "dataSets": [
+              {
+                "breakdowns": [],
+                "dimensions": [],
+                "legendTemplate": "${labels.project}/${labels.name} - ${labels.sync_status}",
+                "measures": [],
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "timeSeriesQuery": {
+                  "outputFullDuration": false,
+                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n    name=~\"${application.value}\",\n  }\n) by (namespace, job, dest_server, project, name, sync_status)\n",
+                  "unitOverride": ""
+                }
+              }
+            ],
+            "thresholds": []
+          }
+        }
+      },
+      {
+        "yPos": 29,
+        "xPos": 16,
+        "height": 8,
+        "width": 8,
+        "widget": {
+          "title": "Application Sync Result",
+          "id": "",
+          "xyChart": {
+            "dataSets": [
+              {
+                "breakdowns": [],
+                "dimensions": [],
+                "legendTemplate": "${labels.project}/${labels.name} - ${labels.phase}",
+                "measures": [],
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "timeSeriesQuery": {
+                  "outputFullDuration": false,
+                  "prometheusQuery": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n        name=~\"${application.value}\",\n      }[${__interval}]\n    )\n  )\n) by (namespace, job, dest_server, project, name, phase)\n",
+                  "unitOverride": ""
+                }
+              }
+            ],
+            "thresholds": []
+          }
+        }
+      },
+      {
+        "yPos": 37,
+        "height": 5,
+        "width": 24,
+        "widget": {
+          "title": "Conversion info",
+          "id": "",
+          "text": {
+            "content": "Converted from 19974_rev4.json on 2025-11-13 at 12:35:19\n\nFor conversion issues such as no data in charts or missing tiles, please see our [troubleshooting docs](https://github.com/GoogleCloudPlatform/monitoring-dashboard-samples/blob/master/scripts/dashboard-importer/README.md#conversion-issues)\n\n##### Generated Warnings\n\n- Template variable 'datasource' was skipped because its type 'datasource' is not supported",
+            "format": "MARKDOWN",
+            "style": {
+              "backgroundColor": "",
+              "fontSize": "FONT_SIZE_UNSPECIFIED",
+              "horizontalAlignment": "HORIZONTAL_ALIGNMENT_UNSPECIFIED",
+              "padding": "PADDING_SIZE_UNSPECIFIED",
+              "pointerLocation": "POINTER_LOCATION_UNSPECIFIED",
+              "textColor": "",
+              "verticalAlignment": "VERTICAL_ALIGNMENT_UNSPECIFIED"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
