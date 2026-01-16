@@ -47,12 +47,17 @@
         "width": 8,
         "widget": {
           "title": "Total Pods",
+          "id": "",
           "scorecard": {
             "blankView": {},
+            "breakdowns": [],
+            "dimensions": [],
+            "measures": [],
             "thresholds": [],
             "timeSeriesQuery": {
               "outputFullDuration": false,
-              "prometheusQuery": "count(count by (\"project_id\",\"location\",\"cluster_name\",\"namespace_name\",\"pod_name\", \"top_level_controller_name\")(avg_over_time(kubernetes_io:pod_volume_utilization{\"monitored_resource\"=\"k8s_pod\",${cluster_name},${location},${project_id},${namespace_name} ,${top_level_controller_name}}[${__interval}])))\n"
+              "prometheusQuery": "count(count by (\"project_id\",\"location\",\"cluster_name\",\"namespace_name\",\"pod_name\", \"top_level_controller_name\")(avg_over_time(kubernetes_io:pod_volume_utilization{\"monitored_resource\"=\"k8s_pod\",${cluster_name},${location},${project_id},${namespace_name} ,${top_level_controller_name}}[${__interval}])))\n",
+              "unitOverride": ""
             }
           }
         }
@@ -80,6 +85,46 @@
       },
       {
         "xPos": 16,
+        "height": 8,
+        "width": 8,
+        "widget": {
+          "title": "CPU Usage / Request",
+          "id": "",
+          "scorecard": {
+            "blankView": {},
+            "breakdowns": [],
+            "dimensions": [],
+            "measures": [],
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "outputFullDuration": false,
+              "timeSeriesFilterRatio": {
+                "numerator": {
+                  "aggregation": {
+                    "alignmentPeriod": "300s",
+                    "crossSeriesReducer": "REDUCE_SUM",
+                    "groupByFields": [],
+                    "perSeriesAligner": "ALIGN_RATE"
+                  },
+                  "filter": "metric.type=\"kubernetes.io/container/cpu/core_usage_time\" resource.type=\"k8s_container\" ${project_id} ${location} ${cluster_name} ${namespace_name} ${top_level_controller_name}"
+                },
+                "denominator": {
+                  "aggregation": {
+                    "alignmentPeriod": "300s",
+                    "crossSeriesReducer": "REDUCE_SUM",
+                    "groupByFields": [],
+                    "perSeriesAligner": "ALIGN_MEAN"
+                  },
+                  "filter": "metric.type=\"kubernetes.io/container/cpu/request_cores\" resource.type=\"k8s_container\" ${project_id} ${location} ${cluster_name} ${namespace_name} ${top_level_controller_name}"
+                }
+              },
+              "unitOverride": ""
+            }
+          }
+        }
+      },
+      {
+        "xPos": 24,
         "height": 8,
         "width": 8,
         "widget": {
@@ -119,7 +164,7 @@
         }
       },
       {
-        "xPos": 24,
+        "xPos": 32,
         "height": 8,
         "width": 8,
         "widget": {
@@ -159,7 +204,7 @@
         }
       },
       {
-        "xPos": 32,
+        "xPos": 40,
         "height": 8,
         "width": 8,
         "widget": {
@@ -191,46 +236,6 @@
                     "perSeriesAligner": "ALIGN_MEAN"
                   },
                   "filter": "metric.type=\"kubernetes.io/container/memory/limit_bytes\" resource.type=\"k8s_container\" ${project_id} ${location} ${cluster_name} ${namespace_name} ${top_level_controller_name}"
-                }
-              },
-              "unitOverride": ""
-            }
-          }
-        }
-      },
-      {
-        "xPos": 40,
-        "height": 8,
-        "width": 8,
-        "widget": {
-          "title": "CPU Usage / Request",
-          "id": "",
-          "scorecard": {
-            "blankView": {},
-            "breakdowns": [],
-            "dimensions": [],
-            "measures": [],
-            "thresholds": [],
-            "timeSeriesQuery": {
-              "outputFullDuration": false,
-              "timeSeriesFilterRatio": {
-                "numerator": {
-                  "aggregation": {
-                    "alignmentPeriod": "300s",
-                    "crossSeriesReducer": "REDUCE_SUM",
-                    "groupByFields": [],
-                    "perSeriesAligner": "ALIGN_RATE"
-                  },
-                  "filter": "metric.type=\"kubernetes.io/container/cpu/core_usage_time\" resource.type=\"k8s_container\" ${project_id} ${location} ${cluster_name} ${namespace_name} ${top_level_controller_name}"
-                },
-                "denominator": {
-                  "aggregation": {
-                    "alignmentPeriod": "300s",
-                    "crossSeriesReducer": "REDUCE_SUM",
-                    "groupByFields": [],
-                    "perSeriesAligner": "ALIGN_MEAN"
-                  },
-                  "filter": "metric.type=\"kubernetes.io/container/cpu/request_cores\" resource.type=\"k8s_container\" ${project_id} ${location} ${cluster_name} ${namespace_name} ${top_level_controller_name}"
                 }
               },
               "unitOverride": ""
