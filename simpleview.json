@@ -335,7 +335,7 @@
       },
       {
         "yPos": 8,
-        "height": 80,
+        "height": 64,
         "width": 48,
         "widget": {
           "title": "Security Pods monitoring",
@@ -788,31 +788,6 @@
               "label": "",
               "scale": "LINEAR"
             }
-          }
-        }
-      },
-      {
-        "yPos": 72,
-        "height": 16,
-        "width": 16,
-        "widget": {
-          "title": "Pods Phases ( by GCP projet, location)",
-          "id": "",
-          "timeSeriesTable": {
-            "columnSettings": [],
-            "dataSets": [
-              {
-                "minAlignmentPeriod": "60s",
-                "tableTemplate": "",
-                "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum by (\"phase\")(avg_over_time({\"__name__\"=\"kube_pod_status_phase\",${project_id},${location}}[${__interval}]))\n#This promql query was automatically converted from a builder query, and it may not be fully equivalent to the builder query. Manually verify the promql query before using it and edit as needed.",
-                  "unitOverride": ""
-                }
-              }
-            ],
-            "displayColumnType": false,
-            "metricVisualization": "NUMBER"
           }
         }
       }
