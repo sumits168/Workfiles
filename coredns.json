@@ -7,6 +7,12 @@
       "stringValue": "",
       "templateVariable": "instance",
       "valueType": "STRING"
+    },
+    {
+      "filterType": "RESOURCE_LABEL",
+      "labelKey": "cluster",
+      "templateVariable": "cluster",
+      "valueType": "STRING_ARRAY"
     }
   ],
   "description": "",
@@ -26,25 +32,17 @@
         "width": 12,
         "widget": {
           "title": "Requests (by instance)",
-          "id": "",
           "pieChart": {
             "chartType": "PIE",
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
-                "measures": [],
-                "sliceNameTemplate": "",
+                "minAlignmentPeriod": "60s",
                 "timeSeriesQuery": {
                   "outputFullDuration": false,
-                  "prometheusQuery": "sum(rate(coredns_dns_requests_total[5m])) by (instance)",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(rate(coredns_dns_requests_total{cluster=~\"${cluster.value}\"}[5m])) by (instance)"
                 }
               }
-            ],
-            "showLabels": false,
-            "showTotal": false,
-            "sliceAggregatedThreshold": 0
+            ]
           }
         }
       },
@@ -54,19 +52,14 @@
         "width": 6,
         "widget": {
           "title": "Upstream Health Check Fails",
-          "id": "",
           "scorecard": {
-            "breakdowns": [],
-            "dimensions": [],
-            "measures": [],
             "sparkChartView": {
               "sparkChartType": "SPARK_LINE"
             },
             "thresholds": [],
             "timeSeriesQuery": {
               "outputFullDuration": false,
-              "prometheusQuery": "sum(rate(coredns_forward_healthcheck_broken_total{instance=~\"${instance.value}\"}[5m]))",
-              "unitOverride": ""
+              "prometheusQuery": "sum(rate(coredns_forward_healthcheck_broken_total{instance=~\"${instance.value}\",cluster=~\"${cluster.value}\"}[5m]))"
             }
           }
         }
@@ -77,19 +70,14 @@
         "width": 6,
         "widget": {
           "title": "Upstream Rejected Queries",
-          "id": "",
           "scorecard": {
-            "breakdowns": [],
-            "dimensions": [],
-            "measures": [],
             "sparkChartView": {
               "sparkChartType": "SPARK_LINE"
             },
             "thresholds": [],
             "timeSeriesQuery": {
               "outputFullDuration": false,
-              "prometheusQuery": "sum(rate(coredns_forward_max_concurrent_rejects_total{instance=~\"${instance.value}\"}[5m]))",
-              "unitOverride": ""
+              "prometheusQuery": "sum(rate(coredns_forward_max_concurrent_rejects_total{instance=~\"${instance.value}\",cluster=~\"${cluster.value}\"}[5m]))"
             }
           }
         }
@@ -100,19 +88,14 @@
         "width": 6,
         "widget": {
           "title": "Panics",
-          "id": "",
           "scorecard": {
-            "breakdowns": [],
-            "dimensions": [],
-            "measures": [],
             "sparkChartView": {
               "sparkChartType": "SPARK_LINE"
             },
             "thresholds": [],
             "timeSeriesQuery": {
               "outputFullDuration": false,
-              "prometheusQuery": "sum(rate(coredns_panics_total{instance=~\"${instance.value}\"}[5m]))",
-              "unitOverride": ""
+              "prometheusQuery": "sum(rate(coredns_panics_total{instance=~\"${instance.value}\",cluster=~\"${cluster.value}\"}[5m]))"
             }
           }
         }
@@ -123,19 +106,14 @@
         "width": 6,
         "widget": {
           "title": "Failed Reloads",
-          "id": "",
           "scorecard": {
-            "breakdowns": [],
-            "dimensions": [],
-            "measures": [],
             "sparkChartView": {
               "sparkChartType": "SPARK_LINE"
             },
             "thresholds": [],
             "timeSeriesQuery": {
               "outputFullDuration": false,
-              "prometheusQuery": "sum(rate(coredns_reload_failed_total{instance=~\"${instance.value}\"}[5m]))",
-              "unitOverride": ""
+              "prometheusQuery": "sum(rate(coredns_reload_failed_total{instance=~\"${instance.value}\",cluster=~\"${cluster.value}\"}[5m]))"
             }
           }
         }
@@ -146,20 +124,15 @@
         "width": 6,
         "widget": {
           "title": "CPU Time",
-          "id": "",
           "scorecard": {
-            "breakdowns": [],
-            "dimensions": [],
             "gaugeView": {
               "lowerBound": 0,
               "upperBound": 100
             },
-            "measures": [],
             "thresholds": [],
             "timeSeriesQuery": {
               "outputFullDuration": false,
-              "prometheusQuery": "sum(rate(process_cpu_seconds_total{instance=~\"${instance.value}\"}[5m]))",
-              "unitOverride": ""
+              "prometheusQuery": "sum(rate(process_cpu_seconds_total{instance=~\"${instance.value}\",cluster=~\"${cluster.value}\"}[5m]))"
             }
           }
         }
@@ -170,19 +143,14 @@
         "width": 6,
         "widget": {
           "title": "Memory Usage",
-          "id": "",
           "scorecard": {
-            "breakdowns": [],
-            "dimensions": [],
-            "measures": [],
             "sparkChartView": {
               "sparkChartType": "SPARK_LINE"
             },
             "thresholds": [],
             "timeSeriesQuery": {
               "outputFullDuration": false,
-              "prometheusQuery": "go_memstats_alloc_bytes{instance=~\"${instance.value}\"}",
-              "unitOverride": ""
+              "prometheusQuery": "go_memstats_alloc_bytes{instance=~\"${instance.value}\",cluster=~\"${cluster.value}\"}"
             }
           }
         }
@@ -193,50 +161,41 @@
         "width": 24,
         "widget": {
           "title": "Responses (latency, internet zone)",
-          "id": "",
           "xyChart": {
+            "chartOptions": {
+              "displayHorizontal": false,
+              "mode": "COLOR"
+            },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "99%",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "histogram_quantile(0.99, sum(rate(coredns_dns_request_duration_seconds_bucket{instance=~\"${instance.value}\", zone=\".\"}[5m])) by (le))",
-                  "unitOverride": ""
+                  "prometheusQuery": "histogram_quantile(0.99, sum(rate(coredns_dns_request_duration_seconds_bucket{instance=~\"${instance.value}\", zone=\".\", cluster=~\"${cluster.value}\"}[5m])) by (le))"
                 }
               },
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "90%",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "histogram_quantile(0.90, sum(rate(coredns_dns_request_duration_seconds_bucket{instance=~\"${instance.value}\", zone=\".\"}[5m])) by (le))",
-                  "unitOverride": ""
+                  "prometheusQuery": "histogram_quantile(0.90, sum(rate(coredns_dns_request_duration_seconds_bucket{instance=~\"${instance.value}\", zone=\".\", cluster=~\"${cluster.value}\"}[5m])) by (le))"
                 }
               },
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "50%",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "histogram_quantile(0.50, sum(rate(coredns_dns_request_duration_seconds_bucket{instance=~\"${instance.value}\", zone=\".\"}[5m])) by (le))",
-                  "unitOverride": ""
+                  "prometheusQuery": "histogram_quantile(0.50, sum(rate(coredns_dns_request_duration_seconds_bucket{instance=~\"${instance.value}\", zone=\".\" ,cluster=~\"${cluster.value}\"}[5m])) by (le))"
                 }
               }
             ],
-            "thresholds": []
+            "thresholds": [],
+            "yAxis": {
+              "scale": "LINEAR"
+            }
           }
         }
       },
@@ -247,37 +206,33 @@
         "width": 24,
         "widget": {
           "title": "Requests (total)",
-          "id": "",
           "xyChart": {
+            "chartOptions": {
+              "displayHorizontal": false,
+              "mode": "COLOR"
+            },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "${labels.server}",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum(rate(coredns_dns_requests_total{instance=~\"${instance.value}\"}[5m])) by (server)",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(rate(coredns_dns_requests_total{instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[5m])) by (server)"
                 }
               },
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "cache",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum(rate(coredns_cache_requests_total{instance=~\"${instance.value}\"}[5m]))",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(rate(coredns_cache_requests_total{instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[5m]))"
                 }
               }
             ],
-            "thresholds": []
+            "thresholds": [],
+            "yAxis": {
+              "scale": "LINEAR"
+            }
           }
         }
       },
@@ -368,76 +323,57 @@
         "width": 24,
         "widget": {
           "title": "Cache (hitrate)",
-          "id": "",
           "xyChart": {
+            "chartOptions": {
+              "displayHorizontal": false,
+              "mode": "COLOR"
+            },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "hits: success",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum(rate(coredns_cache_hits_total{instance=~\"${instance.value}\", type=\"success\"}[5m])) / sum(rate(coredns_cache_requests_total{instance=~\"${instance.value}\"}[5m]))",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(rate(coredns_cache_hits_total{instance=~\"${instance.value}\", type=\"success\", cluster=~\"${cluster.value}\"}[5m])) / sum(rate(coredns_cache_requests_total{instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[5m]))"
                 }
               },
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "hits: denial",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum(rate(coredns_cache_hits_total{instance=~\"${instance.value}\", type=\"denial\"}[5m])) / sum(rate(coredns_cache_requests_total{instance=~\"${instance.value}\"}[5m]))",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(rate(coredns_cache_hits_total{instance=~\"${instance.value}\", type=\"denial\", cluster=~\"${cluster.value}\"}[5m])) / sum(rate(coredns_cache_requests_total{instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[5m]))"
                 }
               },
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "misses",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "(sum(rate(coredns_cache_requests_total{instance=~\"${instance.value}\"}[5m])) - sum(rate(coredns_cache_hits_total{instance=~\"${instance.value}\", type=\"success\"}[5m]))) / sum(rate(coredns_cache_requests_total{instance=~\"${instance.value}\"}[5m]))",
-                  "unitOverride": ""
+                  "prometheusQuery": "(sum(rate(coredns_cache_requests_total{instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[5m])) - sum(rate(coredns_cache_hits_total{instance=~\"${instance.value}\", type=\"success\", cluster=~\"${cluster.value}\"}[5m]))) / sum(rate(coredns_cache_requests_total{instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[5m]))"
                 }
               },
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "hits: DNSSEC",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum(rate(coredns_dnssec_cache_hits_total{instance=~\"${instance.value}\"}[5m])) / sum(rate(coredns_cache_requests_total{instance=~\"${instance.value}\"}[5m]))",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(rate(coredns_dnssec_cache_hits_total{instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[5m])) / sum(rate(coredns_cache_requests_total{instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[5m]))"
                 }
               },
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "misses: DNSSEC",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "(sum(rate(coredns_cache_requests_total{instance=~\"${instance.value}\"}[5m])) - sum(rate(coredns_dnssec_cache_hits_total{instance=~\"${instance.value}\"}[5m]))) / sum(rate(coredns_cache_requests_total{instance=~\"${instance.value}\"}[5m]))",
-                  "unitOverride": ""
+                  "prometheusQuery": "(sum(rate(coredns_cache_requests_total{instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[5m])) - sum(rate(coredns_dnssec_cache_hits_total{instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[5m]))) / sum(rate(coredns_cache_requests_total{instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[5m]))"
                 }
               }
             ],
-            "thresholds": []
+            "thresholds": [],
+            "yAxis": {
+              "scale": "LINEAR"
+            }
           }
         }
       },
@@ -448,24 +384,25 @@
         "width": 24,
         "widget": {
           "title": "Requests (by type)",
-          "id": "",
           "xyChart": {
+            "chartOptions": {
+              "displayHorizontal": false,
+              "mode": "COLOR"
+            },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "${labels.type}",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum(rate(coredns_dns_requests_total{instance=~\"${instance.value}\"}[5m])) by (type)",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(rate(coredns_dns_requests_total{instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[5m])) by (type)"
                 }
               }
             ],
-            "thresholds": []
+            "thresholds": [],
+            "yAxis": {
+              "scale": "LINEAR"
+            }
           }
         }
       },

@@ -6,6 +6,12 @@
       "labelKey": "instance",
       "templateVariable": "instance",
       "valueType": "STRING_ARRAY"
+    },
+    {
+      "filterType": "RESOURCE_LABEL",
+      "labelKey": "cluster",
+      "templateVariable": "cluster",
+      "valueType": "STRING_ARRAY"
     }
   ],
   "description": "",
@@ -25,23 +31,16 @@
         "width": 48,
         "widget": {
           "title": "Logging throughput",
-          "id": "",
           "xyChart": {
             "chartOptions": {
               "displayHorizontal": false,
-              "mode": "COLOR",
-              "showLegend": false
+              "mode": "COLOR"
             },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
-                "legendTemplate": "",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
                   "prometheusQuery": "sum by (node_name)(rate(kubernetes_io:node_logs_input_bytes{monitored_resource=\"k8s_node\"}[${__interval}]))\n",
                   "unitOverride": "By"
                 }
@@ -49,7 +48,6 @@
             ],
             "thresholds": [],
             "yAxis": {
-              "label": "",
               "scale": "LINEAR"
             }
           }
@@ -61,31 +59,22 @@
         "width": 24,
         "widget": {
           "title": "Fluent-bit input bytes/s",
-          "id": "",
           "xyChart": {
             "chartOptions": {
               "displayHorizontal": false,
-              "mode": "COLOR",
-              "showLegend": false
+              "mode": "COLOR"
             },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
-                "legendTemplate": "",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum by (instance)(rate(fluentbit_input_bytes_total[${__interval}]))",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum by (instance)(rate(fluentbit_input_bytes_total{cluster=~\"${cluster.value}\"}[${__interval}]))"
                 }
               }
             ],
             "thresholds": [],
             "yAxis": {
-              "label": "",
               "scale": "LINEAR"
             }
           }
@@ -98,31 +87,22 @@
         "width": 24,
         "widget": {
           "title": "Fluent-bit input records",
-          "id": "",
           "xyChart": {
             "chartOptions": {
               "displayHorizontal": false,
-              "mode": "COLOR",
-              "showLegend": false
+              "mode": "COLOR"
             },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
-                "legendTemplate": "",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum by (instance)(rate(fluentbit_input_records_total{instance=~\"${instance.value}\"}[1m]))",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum by (instance)(rate(fluentbit_input_records_total{instance=~\"${instance.value}\",cluster=~\"${cluster.value}\"}[1m]))"
                 }
               }
             ],
             "thresholds": [],
             "yAxis": {
-              "label": "",
               "scale": "LINEAR"
             }
           }
@@ -134,31 +114,22 @@
         "width": 24,
         "widget": {
           "title": "Fluent-bit output bytes/s",
-          "id": "",
           "xyChart": {
             "chartOptions": {
               "displayHorizontal": false,
-              "mode": "COLOR",
-              "showLegend": false
+              "mode": "COLOR"
             },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
-                "legendTemplate": "",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum by (instance)(rate(fluentbit_output_proc_bytes_total{instance=~\"${instance.value}\"}[1m]))",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum by (instance)(rate(fluentbit_output_proc_bytes_total{instance=~\"${instance.value}\",cluster=~\"${cluster.value}\"}[1m]))"
                 }
               }
             ],
             "thresholds": [],
             "yAxis": {
-              "label": "",
               "scale": "LINEAR"
             }
           }
@@ -171,31 +142,22 @@
         "width": 24,
         "widget": {
           "title": "Fluent-bit output records",
-          "id": "",
           "xyChart": {
             "chartOptions": {
               "displayHorizontal": false,
-              "mode": "COLOR",
-              "showLegend": false
+              "mode": "COLOR"
             },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
-                "legendTemplate": "",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum by (instance)(rate(fluentbit_output_proc_records_total{instance=~\"${instance.value}\"}[1m]))",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum by (instance)(rate(fluentbit_output_proc_records_total{instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[1m]))"
                 }
               }
             ],
             "thresholds": [],
             "yAxis": {
-              "label": "",
               "scale": "LINEAR"
             }
           }
@@ -207,57 +169,36 @@
         "width": 24,
         "widget": {
           "title": "Fluent-bit input files",
-          "id": "",
           "xyChart": {
             "chartOptions": {
               "displayHorizontal": false,
-              "mode": "COLOR",
-              "showLegend": false
+              "mode": "COLOR"
             },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
-                "legendTemplate": "",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum by (instance)(rate(fluentbit_input_files_closed_total{instance=~\"${instance.value}\"}[1m]))",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum by (instance)(rate(fluentbit_input_files_closed_total{instance=~\"${instance.value}\",cluster=~\"${cluster.value}\"}[1m]))"
                 }
               },
               {
-                "breakdowns": [],
-                "dimensions": [],
-                "legendTemplate": "",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum by (instance)(rate(fluentbit_input_files_opened_total{instance=~\"${instance.value}\"}[1m]))",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum by (instance)(rate(fluentbit_input_files_opened_total{instance=~\"${instance.value}\",cluster=~\"${cluster.value}\"}[1m]))"
                 }
               },
               {
-                "breakdowns": [],
-                "dimensions": [],
-                "legendTemplate": "",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum by (instance)(rate(fluentbit_input_files_rotated_total{instance=~\"${instance.value}\"}[1m]))",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum by (instance)(rate(fluentbit_input_files_rotated_total{instance=~\"${instance.value}\",cluster=~\"${cluster.value}\"}[1m]))"
                 }
               }
             ],
             "thresholds": [],
             "yAxis": {
-              "label": "",
               "scale": "LINEAR"
             }
           }
@@ -319,31 +260,22 @@
         "width": 24,
         "widget": {
           "title": "Fluent-bit Errors Total",
-          "id": "",
           "xyChart": {
             "chartOptions": {
               "displayHorizontal": false,
-              "mode": "COLOR",
-              "showLegend": false
+              "mode": "COLOR"
             },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
-                "legendTemplate": "",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum by (instance)(rate(fluentbit_output_errors_total[1m]))",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum by (instance)(rate(fluentbit_output_errors_total{cluster=~\"${cluster.value}\"}[1m]))"
                 }
               }
             ],
             "thresholds": [],
             "yAxis": {
-              "label": "",
               "scale": "LINEAR"
             }
           }
@@ -356,31 +288,22 @@
         "width": 24,
         "widget": {
           "title": "Retries Failed Total",
-          "id": "",
           "xyChart": {
             "chartOptions": {
               "displayHorizontal": false,
-              "mode": "COLOR",
-              "showLegend": false
+              "mode": "COLOR"
             },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
-                "legendTemplate": "",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum by (instance)(rate(fluentbit_output_retries_failed_total[1m]))",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum by (instance)(rate(fluentbit_output_retries_failed_total{cluster=~\"${cluster.value}\"}[1m]))"
                 }
               }
             ],
             "thresholds": [],
             "yAxis": {
-              "label": "",
               "scale": "LINEAR"
             }
           }
@@ -392,31 +315,22 @@
         "width": 48,
         "widget": {
           "title": "Retries Total",
-          "id": "",
           "xyChart": {
             "chartOptions": {
               "displayHorizontal": false,
-              "mode": "COLOR",
-              "showLegend": false
+              "mode": "COLOR"
             },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
-                "legendTemplate": "",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum by (instance)(rate(fluentbit_output_retries_total[1m]))",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum by (instance)(rate(fluentbit_output_retries_total{cluster=~\"${cluster.value}\"}[1m]))"
                 }
               }
             ],
             "thresholds": [],
             "yAxis": {
-              "label": "",
               "scale": "LINEAR"
             }
           }
