@@ -61,24 +61,25 @@
         "width": 24,
         "widget": {
           "title": "Application Health Status",
-          "id": "",
           "xyChart": {
+            "chartOptions": {
+              "displayHorizontal": false,
+              "mode": "COLOR"
+            },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "${labels.project} - ${labels.health_status}",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n  }\n) by (job, project, health_status)\n",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\n    namespace=~'${namespace.value}',\n    job=~'${job.value}',\n    dest_server=~'${kubernetes_cluster.value}',\n    project=~'${project.value}',\n  }\n) by (job, project, health_status)\n"
                 }
               }
             ],
-            "thresholds": []
+            "thresholds": [],
+            "yAxis": {
+              "scale": "LINEAR"
+            }
           }
         }
       },
@@ -88,24 +89,25 @@
         "width": 24,
         "widget": {
           "title": "Application Sync Status",
-          "id": "",
           "xyChart": {
+            "chartOptions": {
+              "displayHorizontal": false,
+              "mode": "COLOR"
+            },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "${labels.project} - ${labels.sync_status}",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n  }\n) by (job, project, sync_status)\n",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\n    namespace=~'${namespace.value}',\n    job=~'${job.value}',\n    dest_server=~'${kubernetes_cluster.value}',\n    project=~'${project.value}',\n  }\n) by (job, project, sync_status)\n"
                 }
               }
             ],
-            "thresholds": []
+            "thresholds": [],
+            "yAxis": {
+              "scale": "LINEAR"
+            }
           }
         }
       },
@@ -115,24 +117,25 @@
         "width": 24,
         "widget": {
           "title": "Application Syncs",
-          "id": "",
           "xyChart": {
+            "chartOptions": {
+              "displayHorizontal": false,
+              "mode": "COLOR"
+            },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "${labels.project} - ${labels.phase}",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n      }[${__interval}]\n    )\n  )\n) by (job, project, phase)\n",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=~\"${cluster.value}\",\n        namespace=~'${namespace.value}',\n        job=~'${job.value}',\n        dest_server=~'${kubernetes_cluster.value}',\n        project=~'${project.value}',\n      }[${__interval}]\n    )\n  )\n) by (job, project, phase)\n"
                 }
               }
             ],
-            "thresholds": []
+            "thresholds": [],
+            "yAxis": {
+              "scale": "LINEAR"
+            }
           }
         }
       },
@@ -143,24 +146,25 @@
         "width": 24,
         "widget": {
           "title": "Application Auto Sync Enabled",
-          "id": "",
           "xyChart": {
+            "chartOptions": {
+              "displayHorizontal": false,
+              "mode": "COLOR"
+            },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "${labels.project} - ${labels.autosync_enabled}",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n  }\n) by (job, project, autosync_enabled)\n",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\n    namespace=~'${namespace.value}',\n    job=~'${job.value}',\n    dest_server=~'${kubernetes_cluster.value}',\n    project=~'${project.value}',\n  }\n) by (job, project, autosync_enabled)\n"
                 }
               }
             ],
-            "thresholds": []
+            "thresholds": [],
+            "yAxis": {
+              "scale": "LINEAR"
+            }
           }
         }
       },
@@ -170,25 +174,22 @@
         "width": 24,
         "widget": {
           "title": "Applications Unhealthy",
-          "id": "",
           "timeSeriesTable": {
             "columnSettings": [
               {
                 "column": "value",
-                "visible": false
+                "visible": true
               }
             ],
             "dataSets": [
               {
-                "tableTemplate": "",
+                "minAlignmentPeriod": "60s",
                 "timeSeriesQuery": {
                   "outputFullDuration": false,
-                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n    health_status!~\"Healthy|Progressing\"\n  }\n) by (job, dest_server, project, name, health_status)\n",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\n    namespace=~'${namespace.value}',\n    job=~'${job.value}',\n    dest_server=~'${kubernetes_cluster.value}',\n    project=~'${project.value}',\n    health_status!~\"Healthy|Progressing\"\n  }\n) by (job, dest_server, project, name, health_status)\n"
                 }
               }
             ],
-            "displayColumnType": false,
             "metricVisualization": "NUMBER"
           }
         }
@@ -200,25 +201,22 @@
         "width": 24,
         "widget": {
           "title": "Applications Out Of Sync",
-          "id": "",
           "timeSeriesTable": {
             "columnSettings": [
               {
                 "column": "value",
-                "visible": false
+                "visible": true
               }
             ],
             "dataSets": [
               {
-                "tableTemplate": "",
+                "minAlignmentPeriod": "60s",
                 "timeSeriesQuery": {
                   "outputFullDuration": false,
-                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n    sync_status!=\"Synced\"\n  }\n) by (job, dest_server, project, name, sync_status) > 0\n",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\n    namespace=~'${namespace.value}',\n    job=~'${job.value}',\n    dest_server=~'${kubernetes_cluster.value}',\n    project=~'${project.value}',\n    sync_status!=\"Synced\"\n  }\n) by (job, dest_server, project, name, sync_status) > 0\n"
                 }
               }
             ],
-            "displayColumnType": false,
             "metricVisualization": "NUMBER"
           }
         }
@@ -229,25 +227,22 @@
         "width": 24,
         "widget": {
           "title": "Applications That Failed to Sync[7d]",
-          "id": "",
           "timeSeriesTable": {
             "columnSettings": [
               {
                 "column": "value",
-                "visible": false
+                "visible": true
               }
             ],
             "dataSets": [
               {
-                "tableTemplate": "",
+                "minAlignmentPeriod": "60s",
                 "timeSeriesQuery": {
                   "outputFullDuration": false,
-                  "prometheusQuery": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n        phase!=\"Succeeded\"\n      }[7d]\n    )\n  )\n) by (job, dest_server, project, name, phase) > 0\n",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=~\"${cluster.value}\",\n        namespace=~'${namespace.value}',\n        job=~'${job.value}',\n        dest_server=~'${kubernetes_cluster.value}',\n        project=~'${project.value}',\n        phase!=\"Succeeded\"\n      }[7d]\n    )\n  )\n) by (job, dest_server, project, name, phase) > 0\n"
                 }
               }
             ],
-            "displayColumnType": false,
             "metricVisualization": "NUMBER"
           }
         }
@@ -259,25 +254,22 @@
         "width": 24,
         "widget": {
           "title": "Applications With Auto Sync Disabled",
-          "id": "",
           "timeSeriesTable": {
             "columnSettings": [
               {
                 "column": "value",
-                "visible": false
+                "visible": true
               }
             ],
             "dataSets": [
               {
-                "tableTemplate": "",
+                "minAlignmentPeriod": "60s",
                 "timeSeriesQuery": {
                   "outputFullDuration": false,
-                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n    autosync_enabled!=\"true\"\n  }\n) by (job, dest_server, project, name, autosync_enabled) > 0\n",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\n    namespace=~'${namespace.value}',\n    job=~'${job.value}',\n    dest_server=~'${kubernetes_cluster.value}',\n    project=~'${project.value}',\n    autosync_enabled!=\"true\"\n  }\n) by (job, dest_server, project, name, autosync_enabled) > 0\n"
                 }
               }
             ],
-            "displayColumnType": false,
             "metricVisualization": "NUMBER"
           }
         }
@@ -288,24 +280,25 @@
         "width": 16,
         "widget": {
           "title": "Application Health Status",
-          "id": "",
           "xyChart": {
+            "chartOptions": {
+              "displayHorizontal": false,
+              "mode": "COLOR"
+            },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "${labels.project}/${labels.name} - ${labels.health_status}",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n    name=~\"${application.value}\",\n  }\n) by (namespace, job, dest_server, project, name, health_status)\n",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\n    namespace=~'${namespace.value}',\n    job=~'${job.value}',\n    dest_server=~'${kubernetes_cluster.value}',\n    project=~'${project.value}',\n    name=~\"${application.value}\",\n  }\n) by (namespace, job, dest_server, project, name, health_status)\n"
                 }
               }
             ],
-            "thresholds": []
+            "thresholds": [],
+            "yAxis": {
+              "scale": "LINEAR"
+            }
           }
         }
       },
@@ -316,24 +309,25 @@
         "width": 16,
         "widget": {
           "title": "Application Sync Status",
-          "id": "",
           "xyChart": {
+            "chartOptions": {
+              "displayHorizontal": false,
+              "mode": "COLOR"
+            },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "${labels.project}/${labels.name} - ${labels.sync_status}",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n    name=~\"${application.value}\",\n  }\n) by (namespace, job, dest_server, project, name, sync_status)\n",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(\n  argocd_app_info{\n    cluster=~\"${cluster.value}\",\n    namespace=~'${namespace.value}',\n    job=~'${job.value}',\n    dest_server=~'${kubernetes_cluster.value}',\n    project=~'${project.value}',\n    name=~\"${application.value}\",\n  }\n) by (namespace, job, dest_server, project, name, sync_status)\n"
                 }
               }
             ],
-            "thresholds": []
+            "thresholds": [],
+            "yAxis": {
+              "scale": "LINEAR"
+            }
           }
         }
       },
@@ -344,24 +338,25 @@
         "width": 16,
         "widget": {
           "title": "Application Sync Result",
-          "id": "",
           "xyChart": {
+            "chartOptions": {
+              "displayHorizontal": false,
+              "mode": "COLOR"
+            },
             "dataSets": [
               {
-                "breakdowns": [],
-                "dimensions": [],
                 "legendTemplate": "${labels.project}/${labels.name} - ${labels.phase}",
-                "measures": [],
                 "plotType": "LINE",
                 "targetAxis": "Y1",
                 "timeSeriesQuery": {
-                  "outputFullDuration": false,
-                  "prometheusQuery": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=~\"${cluster.value}\",\nnamespace=~'${namespace.value}',\njob=~'${job.value}',\ndest_server=~'${kubernetes_cluster.value}',\nproject=~'${project.value}',\n\n        name=~\"${application.value}\",\n      }[${__interval}]\n    )\n  )\n) by (namespace, job, dest_server, project, name, phase)\n",
-                  "unitOverride": ""
+                  "prometheusQuery": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=~\"${cluster.value}\",\n        namespace=~'${namespace.value}',\n        job=~'${job.value}',\n        dest_server=~'${kubernetes_cluster.value}',\n        project=~'${project.value}',\n        name=~\"${application.value}\",\n      }[${__interval}]\n    )\n  )\n) by (namespace, job, dest_server, project, name, phase)\n"
                 }
               }
             ],
-            "thresholds": []
+            "thresholds": [],
+            "yAxis": {
+              "scale": "LINEAR"
+            }
           }
         }
       }
