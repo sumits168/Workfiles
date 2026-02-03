@@ -1,0 +1,23 @@
+{
+  "displayName": "Error rate (copy)",
+  "userLabels": {},
+  "conditions": [
+    {
+      "displayName": "New condition",
+      "conditionPrometheusQueryLanguage": {
+        "duration": "3600s",
+        "evaluationInterval": "30s",
+        "query": "(sum(rate(apiserver_request_total{code=~\"[45]..\"}[5m])) /\nsum(rate(apiserver_request_total[5m]))) * 100 < 0.8"
+      }
+    }
+  ],
+  "alertStrategy": {
+    "notificationPrompts": [
+      "OPENED"
+    ]
+  },
+  "combiner": "OR",
+  "enabled": true,
+  "notificationChannels": [],
+  "severity": "WARNING"
+}
