@@ -1,5 +1,5 @@
 {
-  "displayName": "Error rate (copy)",
+  "displayName": "API Server Success ratio",
   "userLabels": {},
   "conditions": [
     {
@@ -7,7 +7,7 @@
       "conditionPrometheusQueryLanguage": {
         "duration": "3600s",
         "evaluationInterval": "30s",
-        "query": "(sum(rate(apiserver_request_total{code=~\"[45]..\"}[5m])) /\nsum(rate(apiserver_request_total[5m]))) * 100 < 0.8"
+        "query": "(sum(rate(apiserver_request_total{code=~\"[45]..\"}[5m])) by (cluster) /\nsum(rate(apiserver_request_total[5m])) by (cluster)) * 100 < 0.9"
       }
     }
   ],
