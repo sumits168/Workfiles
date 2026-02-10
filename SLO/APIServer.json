@@ -1,0 +1,14 @@
+{
+  "name": "projects/569989660354/services/ist:init1-obs-prj4-a37f-location-us-central1-tnt-obs-gke-app-2-cluster-1-us-central1-default-kubernetes/serviceLevelObjectives/wRYmqHp3REWIy4OhaNtxmA",
+  "displayName": "API Server Success ratio",
+  "goal": 0.95,
+  "rollingPeriod": "2592000s",
+  "serviceLevelIndicator": {
+    "requestBased": {
+      "goodTotalRatio": {
+        "goodServiceFilter": "metric.type=\"prometheus.googleapis.com/apiserver_request_total/counter\" resource.type=\"prometheus_target\" metric.labels.code=monitoring.regex.full_match(\"200\")",
+        "totalServiceFilter": "metric.type=\"prometheus.googleapis.com/apiserver_request_total/counter\" resource.type=\"prometheus_target\""
+      }
+    }
+  }
+}
