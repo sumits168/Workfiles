@@ -1,0 +1,23 @@
+{
+  "displayName": "CoreDNS Query Success Rate (copy)",
+  "userLabels": {},
+  "conditions": [
+    {
+      "displayName": "New condition",
+      "conditionPrometheusQueryLanguage": {
+        "duration": "3600s",
+        "evaluationInterval": "30s",
+        "query": "# CoreDNS Query Success Rate\nsum(rate(coredns_dns_responses_total{rcode=~\"NOERROR|NXDOMAIN\"}[10m])) by (cluster)\n/\nsum(rate(coredns_dns_responses_total[10m])) by (cluster) * 100"
+      }
+    }
+  ],
+  "alertStrategy": {
+    "notificationPrompts": [
+      "OPENED"
+    ]
+  },
+  "combiner": "OR",
+  "enabled": true,
+  "notificationChannels": [],
+  "severity": "SEVERITY_UNSPECIFIED"
+}

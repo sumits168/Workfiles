@@ -1,0 +1,18 @@
+{
+  "name": "projects/569989660354/services/ist:init1-obs-prj4-a37f-location-us-central1-tnt-obs-gke-app-2-cluster-1-us-central1-default-kubernetes/serviceLevelObjectives/NpLukn9pRKWZjsc1qVEqPg",
+  "displayName": "Node availability",
+  "goal": 0.95,
+  "rollingPeriod": "2592000s",
+  "serviceLevelIndicator": {
+    "windowsBased": {
+      "windowPeriod": "300s",
+      "metricSumInRange": {
+        "timeSeries": "metric.type=\"prometheus.googleapis.com/kube_node_status_condition/gauge\" resource.type=\"prometheus_target\" metric.labels.condition=\"Ready\" metric.labels.status=\"true\"",
+        "range": {
+          "min": -9007199254740991,
+          "max": 180
+        }
+      }
+    }
+  }
+}

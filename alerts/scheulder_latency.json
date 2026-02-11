@@ -1,0 +1,23 @@
+{
+  "displayName": "Scheduling latency (copy)",
+  "userLabels": {},
+  "conditions": [
+    {
+      "displayName": "New condition",
+      "conditionPrometheusQueryLanguage": {
+        "duration": "3600s",
+        "evaluationInterval": "30s",
+        "query": "# P95 Pod Scheduling Latency \n# Unit - Seconds (s)\nhistogram_quantile(\n0.95,\nsum(rate(scheduler_pod_scheduling_sli_duration_seconds_bucket[10m])) by (le, cluster)\n)"
+      }
+    }
+  ],
+  "alertStrategy": {
+    "notificationPrompts": [
+      "OPENED"
+    ]
+  },
+  "combiner": "OR",
+  "enabled": true,
+  "notificationChannels": [],
+  "severity": "SEVERITY_UNSPECIFIED"
+}

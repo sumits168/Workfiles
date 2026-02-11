@@ -1,0 +1,17 @@
+{
+  "name": "projects/569989660354/services/ist:init1-obs-prj4-a37f-location-us-central1-tnt-obs-gke-app-2-cluster-1-us-central1-default-kubernetes/serviceLevelObjectives/Wa1aPAKEScaOgT50bcVf3w",
+  "displayName": "Scheduling latency: P95",
+  "goal": 0.95,
+  "rollingPeriod": "2592000s",
+  "serviceLevelIndicator": {
+    "requestBased": {
+      "distributionCut": {
+        "distributionFilter": "metric.type=\"prometheus.googleapis.com/scheduler_pod_scheduling_sli_duration_seconds/histogram\" resource.type=\"prometheus_target\"",
+        "range": {
+          "min": -9007199254740991,
+          "max": 5
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "displayName": "API server: Low latency P95 (copy)",
+  "userLabels": {},
+  "conditions": [
+    {
+      "displayName": "New condition",
+      "conditionPrometheusQueryLanguage": {
+        "duration": "3600s",
+        "evaluationInterval": "30s",
+        "query": "histogram_quantile(0.95,\nsum(rate(apiserver_request_duration_seconds_bucket{verb=~\"POST|PUT|PATCH|DELETE\"}[5m])) by (verb, cluster, le)) < 1"
+      }
+    }
+  ],
+  "alertStrategy": {
+    "notificationPrompts": [
+      "OPENED"
+    ]
+  },
+  "combiner": "OR",
+  "enabled": true,
+  "notificationChannels": [],
+  "severity": "WARNING"
+}

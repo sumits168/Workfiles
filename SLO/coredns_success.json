@@ -1,0 +1,14 @@
+{
+  "name": "projects/569989660354/services/ist:init1-obs-prj4-a37f-location-us-central1-tnt-obs-gke-app-2-cluster-1-us-central1-default-kubernetes/serviceLevelObjectives/cYkstZnaSGqFCAzoVRGfyw",
+  "displayName": "CoreDNS success rate",
+  "goal": 0.95,
+  "rollingPeriod": "2592000s",
+  "serviceLevelIndicator": {
+    "requestBased": {
+      "goodTotalRatio": {
+        "goodServiceFilter": "metric.type=\"prometheus.googleapis.com/coredns_dns_responses_total/counter\" resource.type=\"prometheus_target\" metric.labels.rcode=monitoring.regex.full_match(\"NOERROR|NXDOMAIN\")",
+        "totalServiceFilter": "metric.type=\"prometheus.googleapis.com/coredns_dns_responses_total/counter\" resource.type=\"prometheus_target\""
+      }
+    }
+  }
+}

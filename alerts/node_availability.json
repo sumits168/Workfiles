@@ -1,0 +1,23 @@
+{
+  "displayName": "Node Availability Ratio by cluster (copy)",
+  "userLabels": {},
+  "conditions": [
+    {
+      "displayName": "New condition",
+      "conditionPrometheusQueryLanguage": {
+        "duration": "3600s",
+        "evaluationInterval": "30s",
+        "query": "# Node Availability Ratio by cluster\n# Unit - Percentage (%)\navg_over_time(\n  (\n    sum(kube_node_status_condition{condition=\"Ready\",status=\"true\"}) by (cluster)\n    /\n    count(kube_node_info) by (cluster)\n  )[10m:]\n) * 100 < 0.95"
+      }
+    }
+  ],
+  "alertStrategy": {
+    "notificationPrompts": [
+      "OPENED"
+    ]
+  },
+  "combiner": "OR",
+  "enabled": true,
+  "notificationChannels": [],
+  "severity": "SEVERITY_UNSPECIFIED"
+}

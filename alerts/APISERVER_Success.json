@@ -1,0 +1,23 @@
+{
+  "displayName": "API Server Success ratio (copy)",
+  "userLabels": {},
+  "conditions": [
+    {
+      "displayName": "New condition",
+      "conditionPrometheusQueryLanguage": {
+        "duration": "3600s",
+        "evaluationInterval": "30s",
+        "query": "(sum(rate(apiserver_request_total{code=~\"2..|1..|3..\"}[5m])) by (cluster) /\nsum(rate(apiserver_request_total[5m])) by (cluster)) * 100 < 0.9"
+      }
+    }
+  ],
+  "alertStrategy": {
+    "notificationPrompts": [
+      "OPENED"
+    ]
+  },
+  "combiner": "OR",
+  "enabled": true,
+  "notificationChannels": [],
+  "severity": "WARNING"
+}

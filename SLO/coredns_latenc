@@ -1,0 +1,17 @@
+{
+  "name": "projects/569989660354/services/ist:init1-obs-prj4-a37f-location-us-central1-tnt-obs-gke-app-2-cluster-1-us-central1-default-kubernetes/serviceLevelObjectives/lSE-eqabQgqcynv1aRpykQ",
+  "displayName": "CoreDNS low latency",
+  "goal": 0.95,
+  "rollingPeriod": "2592000s",
+  "serviceLevelIndicator": {
+    "requestBased": {
+      "distributionCut": {
+        "distributionFilter": "metric.type=\"prometheus.googleapis.com/coredns_dns_request_duration_seconds/histogram\" resource.type=\"prometheus_target\"",
+        "range": {
+          "min": -9007199254740991,
+          "max": 0.02
+        }
+      }
+    }
+  }
+}
