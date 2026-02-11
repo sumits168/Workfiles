@@ -1,5 +1,5 @@
 {
-  "displayName": "Scheduling latency (copy)",
+  "displayName": "Scheduling latency",
   "userLabels": {},
   "conditions": [
     {
@@ -7,7 +7,7 @@
       "conditionPrometheusQueryLanguage": {
         "duration": "3600s",
         "evaluationInterval": "30s",
-        "query": "# P95 Pod Scheduling Latency \n# Unit - Seconds (s)\nhistogram_quantile(\n0.95,\nsum(rate(scheduler_pod_scheduling_sli_duration_seconds_bucket[10m])) by (le, cluster)\n)"
+        "query": "# P95 Pod Scheduling Latency \n# Unit - Seconds (s)\nhistogram_quantile(\n0.95,\nsum(rate(scheduler_pod_scheduling_sli_duration_seconds_bucket[10m])) by (le, cluster)\n) > 5"
       }
     }
   ],

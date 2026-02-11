@@ -1,5 +1,5 @@
 {
-  "displayName": "coredns latency (copy)",
+  "displayName": "coredns latency",
   "userLabels": {},
   "conditions": [
     {
@@ -7,7 +7,7 @@
       "conditionPrometheusQueryLanguage": {
         "duration": "3600s",
         "evaluationInterval": "30s",
-        "query": "# Latency: 95%\nhistogram_quantile(0.95,\nsum(rate(coredns_dns_request_duration_seconds_bucket[10m])) by (le, cluster)\n)"
+        "query": "# Latency: 95%\nhistogram_quantile(0.95,\nsum(rate(coredns_dns_request_duration_seconds_bucket[10m])) by (le, cluster)\n) < 0.1"
       }
     }
   ],
