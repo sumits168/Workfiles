@@ -1,0 +1,17 @@
+{
+  "displayName": "GKE - platform resources Uptime",
+  "goal": 0.9,
+  "rollingPeriod": "2592000s",
+  "serviceLevelIndicator": {
+    "windowsBased": {
+      "windowPeriod": "300s",
+      "metricMeanInRange": {
+        "timeSeries": "metric.type=\"prometheus.googleapis.com/up/gauge\" resource.type=\"prometheus_target\" resource.labels.job=monitoring.regex.full_match(\"gmp-operator|kube-dns\")",
+        "range": {
+          "min": 0.8,
+          "max": 9007199254740991
+        }
+      }
+    }
+  }
+}
